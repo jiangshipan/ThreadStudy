@@ -1,0 +1,24 @@
+1.新建线程
+    - 继承Thread类
+    - 实现Runable接口
+    - 实现Callable接口
+2.线程状态
+    - 新建
+    - 运行(就绪和运行)
+    - 等待,阻塞(阻塞于锁),超时等待(指定时间自行返回)
+    - 结束
+3.线程基本操作
+    - interrupted, interrupt, isInterrupted
+    - join
+    - sleep VS wait
+        -- Thread.sleep()   Object.wait()
+        -- wait必须在同步方法或同步块中调用
+        -- wait释放对象锁,sleep仅仅让出cpu
+        -- wait需要等待notify
+    - yield: 让出cpu,具有相同优先级的线程能够获得
+4.守护线程Daemon
+    - 用户线程结束后守护线程就会自动结束
+    - setDaemon(true)
+    - 守护线程退出的时候并不会执行finally里的代码
+
+参考:href:https://juejin.im/post/5ae6cf7a518825670960fcc2

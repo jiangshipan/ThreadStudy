@@ -1,0 +1,27 @@
+1.volatile(java虚拟机提供的最轻量同步机制)
+    - 被volatile修饰的变量能够保证每个线程能够获取该变量的最新值,避免脏读
+2.volatile原理
+    - 对volatile变量写操作时候会多出lock前缀
+        -- 将当前处理器缓存行的数据写会系统内存
+        -- 这个写操作会使得其他cpu里缓存了该内存地址的数据无效
+    - 为了保证哥哥处理器缓存一致,就会实现缓存一致协议
+        -- 每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期
+    - 结论:
+        -- Lock前缀的指令会引起处理器缓存写回内存；
+        -- 一个处理器的缓存回写到内存会导致其他处理器的缓存失效；
+        -- 当处理器发现本地缓存失效后，就会从内存中重读该变量数据，即可以获取当前最新值。
+3.volatile & happens-before (8规则之1)
+    - 对一个volatile域的写，happens-before于任意后续对这个volatile域的读。
+4.volatile阻止重排序 -> 方法:添加内存屏障
+    - StoreStore屏障:确保store1数据先于store2数据
+    - StoreLoad屏障：确保stroe1数据先于load2装载
+    - LoadLoad屏障：load1数据装载先于load2装载
+    - LoadStore屏障：load1数据装载先于sotre2
+
+    - StoreStore屏障：禁止上面的普通写和下面的volatile写重排序；
+    - StoreLoad屏障：防止上面的volatile写与下面可能有的volatile读/写重排序
+    - LoadLoad屏障：禁止下面所有的普通读操作和上面的volatile读重排序
+    - LoadStore屏障：禁止下面所有的普通写操作和上面的volatile读重排序
+
+
+参考:href:https://juejin.im/post/5ae9b41b518825670b33e6c4

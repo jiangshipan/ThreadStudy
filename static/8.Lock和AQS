@@ -1,0 +1,4 @@
+1.Lock
+    - lock与synchronized功能一样
+    - 拥有了锁获取和释放的可操作性,可中断,超时获取锁等特性
+    - lock必须调用unlock释放锁
